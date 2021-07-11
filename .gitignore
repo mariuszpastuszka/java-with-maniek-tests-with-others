@@ -3,3 +3,5 @@
 java-with-maniek-testing-and-other.iml
 
 *.class
+
+target/
