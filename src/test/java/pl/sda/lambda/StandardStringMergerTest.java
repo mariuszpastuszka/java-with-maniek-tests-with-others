@@ -1,9 +1,21 @@
 package pl.sda.lambda;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class StringMergerTest {
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class StandardStringMergerTest {
+
+    StringMerger merger;
+
+    @BeforeEach
+    public void init() {
+        merger = StringConverterFactory.createStandardStringMerger();
+    }
 
     @Test
     public void testLambdaMerging() {
@@ -36,5 +48,29 @@ class StringMergerTest {
                 return first + second + third;
             }
         };
+    }
+
+    @Test
+    void primitivesTest() {
+        List<Integer> ints;
+    }
+
+    @Test
+    void shouldReturnNonNullImplementationOfStringMerger() {
+        var merger = StringConverterFactory.createStandardStringMerger();
+        assertNotNull(merger);
+    }
+
+    @Test
+    void shouldCheckCorrectnessOfMergeResults() {
+        var merger = StringConverterFactory.createStandardStringMerger();
+
+        assertEquals("Ala ma", merger.mergeStrings("Ala", " ma"));
+        assertEquals("", merger.mergeStrings("", ""));
+
+        // "" + null
+        assertEquals("", merger.mergeStrings(null, ""));
+        assertEquals("", merger.mergeStrings("", null));
+        assertNull(merger.mergeStrings(null, null));
     }
 }
